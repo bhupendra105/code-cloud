@@ -1,0 +1,265 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sundeep Free Cloud</title>
+    <!-- Font Awesome -->
+    <script src="/socket.io/socket.io.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai-sublime.min.css"
+      integrity="sha512-ade8vHOXH67Cm9z/U2vBpckPD1Enhdxl3N05ChXyFx5xikfqggrK4RrEele+VWY/iaZyfk7Bhk6CyZvlh7+5JQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- MDB -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <style>
+      #editor { width: 100%; height: 400px; background-color:black !important;
+      color:white !important;}
+    </style>
+  </head>
+  <body>
+    <audio src="./message.mp3" id="tone" style="display:none;"></audio>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-md">
+        <a href="#">Sundeep Code Cloud</a>
+      </div>
+    </nav>
+    <div
+      class="container shadow-4 rounded border border-primary mt-3 pb-3 mb-5"
+    >
+      <!-- Tabs navs -->
+      <ul class="nav nav-tabs nav-fill mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link active"
+            id="ex2-tab-1"
+            data-mdb-toggle="tab"
+            href="#ex2-tabs-1"
+            role="tab"
+            aria-controls="ex2-tabs-1"
+            aria-selected="true"
+          >Text</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            id="ex2-tab-2"
+            data-mdb-toggle="tab"
+            href="#ex2-tabs-2"
+            role="tab"
+            aria-controls="ex2-tabs-2"
+            aria-selected="false"
+          >Code</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            id="ex2-tab-3"
+            data-mdb-toggle="tab"
+            href="#ex2-tabs-3"
+            role="tab"
+            aria-controls="ex2-tabs-3"
+            aria-selected="false"
+          >File</a>
+        </li>
+      </ul>
+      <!-- Tabs navs -->
+
+      <!-- Tabs content -->
+      <div class="tab-content" id="ex2-content">
+        <div
+          class="tab-pane fade show active"
+          id="ex2-tabs-1"
+          role="tabpanel"
+          aria-labelledby="ex2-tab-1"
+        >
+          <textarea
+            id="text"
+            cols="30"
+            rows="10"
+            class="form-control"
+            placeholder="Paste or Type Text Content Here!"
+          ></textarea>
+          <div class="d-flex justify-content-around" id="replacetext">
+            <button
+              class="text-send btn btn-primary btn-lg mt-2"
+              id="textclear"
+              onclick="cleartext()"
+            >
+              Clear
+            </button>
+            <button class="text-send btn btn-primary btn-lg mt-2" id="textsend">
+              Send
+            </button>
+            <button class="text-save btn btn-primary btn-lg mt-2" id="textsave">
+              Save
+            </button>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="ex2-tabs-2"
+          role="tabpanel"
+          aria-labelledby="ex2-tab-2"
+        >
+          <div class="d-flex justify-content-center">
+            <div class="input-group w-100">
+              <input
+                id="filepath"
+                type="text"
+                class="form-control"
+                placeholder="Filename.js"
+                aria-label="Example input"
+                aria-describedby="button-addon1"
+              />
+              <button
+                class="btn btn-primary"
+                type="button"
+                id="filepathbtn"
+                data-mdb-ripple-color="dark"
+              >
+                Set
+              </button>
+            </div>
+          </div>
+          <div id="editor" class="codemirror form-control">
+          </div>
+          <div class="d-flex justify-content-around">
+            <button
+              class="text-send btn btn-primary btn-lg mt-2"
+              id="codeclear"
+              onclick="clearcode()"
+            >
+              Clear
+            </button>
+            <button class="code-send btn btn-primary btn-lg mt-2" id="codesend">
+              Send
+            </button>
+            <button class="code-save btn btn-primary btn-lg mt-2" id="codesave">
+              Save
+            </button>
+          </div>
+          <!-- tab 2 -->
+        </div>
+        <div
+          class="tab-pane fade"
+          id="ex2-tabs-3"
+          role="tabpanel"
+          aria-labelledby="ex2-tab-3"
+        >
+          <div class="dragbody">
+            <div class="drag-area">
+              <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+              <header>Drag & Drop to Upload File</header>
+              <span>OR</span>
+              <button>Browse File</button>
+              <input id="file" type="file" hidden />
+            </div>
+          </div>
+          <div class="d-flex justify-content-around">
+            <button class="file-send btn btn-primary btn-lg mt-2" id="filesend">
+              Send
+            </button>
+            <button class="file-save btn btn-primary btn-lg mt-2" id="filesave">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="settings d-flex justify-content-evenly">
+        <button class="btn btn-primary mt-2 btn-lg m-0 secret" id="setsecret">
+          Set Secret
+        </button>
+        <button
+          class="btn btn-primary mt-2 btn-lg m-0 delsecret"
+          id="delsecret"
+        >
+          Delete Secret
+        </button>
+        <button class="btn btn-primary mt-2 btn-lg m-0 showfiles">
+          Show Files
+        </button>
+      </div>
+    </div>
+
+    <div class="container mb-5">
+      <div class="accordion w-100 acd" id="basicAccordion">
+      </div>
+    </div>
+    <!-- Tabs content -->
+    <!-- MDB -->
+    <script>
+      const socket= io()
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/languages/go.min.js"
+    ></script>
+    <script src="./onload.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/he/1.2.0/he.min.js"
+      integrity="sha512-PEsccDx9jqX6Dh4wZDCnWMaIO3gAaU0j46W//sSqQhUQxky6/eHZyeB3NrXD2xsyugAKd4KPiDANkcuoEa2JuA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+      integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./notify.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"
+    ></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./require.js"></script>
+    <script
+      src="/ace-builds/src-noconflict/ace.js"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <script src="/build/src-noconflict/ace.js"></script>
+    <!-- load ace language tools -->
+    <script src="/build/src-noconflict/ext-language_tools.js"></script>
+    <script src="/build/src-noconflict/ext-modelist.js"></script>
+    <script src="/build/src-noconflict/ext-beautify.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script src="./editor.js"></script>
+    <script src="./api.js" type="module"></script>
+    <script src="./js/socket.js"></script>
+
+  </body>
+</html>
