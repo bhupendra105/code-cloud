@@ -27,6 +27,9 @@ io.on("connection", (socket) => {
   socket.on("signal2", (data) => {
     socket.broadcast.emit("from2", data);
   });
+  socket.on("offerReject", () => {
+    socket.emit("offerRejectRes");
+  });
   socket.on("text", (json) => {
     axios.post(api, json).then((res) => {
       socket.broadcast.emit("new text", JSON.stringify(res.data));
