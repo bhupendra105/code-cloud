@@ -39,6 +39,7 @@
     </style>
   </head>
   <body>
+    <a href="" id="hidden_link" style="display:none;">Download</a>
     <audio src="./message.mp3" id="tone" style="display:none;"></audio>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-md">
@@ -112,7 +113,11 @@
             <button class="text-send btn btn-primary btn-lg mt-2" id="textsend">
               Send
             </button>
-            <button class="text-save btn btn-primary btn-lg mt-2" id="textsave">
+            <button
+              class="text-save btn btn-primary btn-lg mt-2"
+              id="textsave"
+              onclick="download('text')"
+            >
               Save
             </button>
           </div>
@@ -156,7 +161,11 @@
             <button class="code-send btn btn-primary btn-lg mt-2" id="codesend">
               Send
             </button>
-            <button class="code-save btn btn-primary btn-lg mt-2" id="codesave">
+            <button
+              class="code-save btn btn-primary btn-lg mt-2"
+              id="codesave"
+              onclick="download('code')"
+            >
               Save
             </button>
           </div>
@@ -197,9 +206,6 @@
           id="delsecret"
         >
           Delete Secret
-        </button>
-        <button class="btn btn-primary mt-2 btn-lg m-0 showfiles">
-          Show Files
         </button>
       </div>
     </div>

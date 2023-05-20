@@ -61,6 +61,21 @@ function sendUi(id, type, fn, elm) {
     }, 3000);
   }
 }
+let dlink = document.querySelector("#download_link");
+function download(type) {
+  if (type == "text") {
+    dlink.href =
+      "data:text/plain;charset=utf-8," + encodeURIComponent(txtarea.value);
+    dlink.download = new Date().toLocaleString() + ".txt";
+    dlink.click();
+  } else if (type == "code") {
+    dlink.href =
+      "data:text/plain;charset=utf-8," +
+      encodeURIComponent(editor.Session().getValue());
+    dlink.download = new Date().toLocaleString() + ".txt";
+    dlink.click();
+  }
+}
 let beforeload = `
   <div class="spinner-grow text-primary" role="status">
   <span class="sr-only">Loading...</span>
