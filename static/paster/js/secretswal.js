@@ -18,6 +18,8 @@ export function secretSwal() {
       });
     } else {
       localStorage.setItem("secret", secret);
+      $.notify("Secret Saved!", "info");
+      bl();
     }
   });
 }

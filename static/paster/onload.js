@@ -87,18 +87,19 @@ let beforeload = `
   <span class="sr-only">Loading...</span>
 </div>
   `;
-let acd1 = document.querySelector(".acd");
-acd1.innerHTML = beforeload;
-let ls = localStorage.getItem("secret");
-if (ls != null) {
-  fetch(api + "?secret=" + ls)
-    .then((res) => res.json())
-    .then((data1) => {
-      let data = data1.data;
-      let rdc = data.reduce((pre, cur, i) => {
-        return (
-          pre +
-          `
+function bl() {
+  let acd1 = document.querySelector(".acd");
+  let ls = localStorage.getItem("secret");
+  if (ls != null) {
+    acd1.innerHTML = beforeload;
+    fetch(api + "?secret=" + ls)
+      .then((res) => res.json())
+      .then((data1) => {
+        let data = data1.data;
+        let rdc = data.reduce((pre, cur, i) => {
+          return (
+            pre +
+            `
     <div class="accordion-item rem_${cur.id}">
           <h2 class="accordion-header" id="heading${i}">
             <button
@@ -122,17 +123,17 @@ if (ls != null) {
             <div class="accordion-body">
             <div class="d-flex justify-content-around">
             <textarea id="id_${cur.id}" style="display:none;">${
-            cur.data
-          }</textarea>
+              cur.data
+            }</textarea>
             <button class="btn btn-info" onclick="copy('#id_${
               cur.id
             }',this)">Copy</button>
             <button class="btn btn-info" onclick="sendUi('#id_${cur.id}','${
-            cur.type
-          }','${cur.filename}',this)">Send To Editor</button>
+              cur.type
+            }','${cur.filename}',this)">Send To Editor</button>
               <button class="btn btn-danger" onclick="del(${cur.id},'.rem_${
-            cur.id
-          }',this)">Delete</button>
+              cur.id
+            }',this)">Delete</button>
             </div><hr>
              ${(() => {
                if (cur.type == "text") {
@@ -151,9 +152,11 @@ if (ls != null) {
           </div>
         </div>
     `
-        );
-      }, "");
-      acd1.innerHTML = rdc;
-      hljs.highlightAll();
-    });
+          );
+        }, "");
+        acd1.innerHTML = rdc;
+        hljs.highlightAll();
+      });
+  }
 }
+bl();
