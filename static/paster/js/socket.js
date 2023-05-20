@@ -35,15 +35,23 @@ socket.on("new text", (text) => {
           >
             <div class="accordion-body">
             <div class="d-flex justify-content-around">
-            <textarea id="id_${txt.id}" style="display:none;">${
-        txt.data
-      }</textarea>
-            <button class="btn btn-info" onclick="copy('#id_${
-              txt.id
-            }',this)">Copy</button>
-            <button class="btn btn-info" onclick="sendUi('#id_${txt.id}','${
-        txt.type
-      }','${txt.filename}',this)">Send To Editor</button>
+            <textarea id="id_${txt.id}" style="display:none;">${(() => {
+        if (txt.type == "file") {
+          return "";
+        } else {
+          txt.data;
+        }
+      })()}</textarea>
+           ${(() => {
+             if (txt.type == "file") {
+               return "";
+             } else {
+               return `
+                 <button class="btn btn-info" onclick="copy('#id_${txt.id}',this)">Copy</button>
+            <button class="btn btn-info" onclick="sendUi('#id_${txt.id}','${txt.type}','${txt.filename}',this)">Send To Editor</button>
+                `;
+             }
+           })()}
               <button class="btn btn-danger" onclick="del(${txt.id},'.rem_${
         txt.id
       }',this)">Delete</button>
@@ -59,6 +67,8 @@ socket.on("new text", (text) => {
                     </code>
                     </pre>
                     `;
+               } else if (txt.type == "file") {
+                 return `<a href='${txt.data}' class='btn btn-success' download='${txt.filename}'>Download</a>`;
                }
              })()}
             </div>

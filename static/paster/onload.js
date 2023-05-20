@@ -69,10 +69,14 @@ function download(type) {
     dlink.download = new Date().toLocaleString() + ".txt";
     dlink.click();
   } else if (type == "code") {
+    let pth = document.querySelector("#filepath");
     dlink.href =
       "data:text/plain;charset=utf-8," +
-      encodeURIComponent(editor.Session().getValue());
-    dlink.download = new Date().toLocaleString() + ".txt";
+      encodeURIComponent(editor.session.getValue());
+    dlink.download =
+      pth.value.trim() != ""
+        ? pth.value
+        : new Date().toLocaleString() + ".html";
     dlink.click();
   }
 }
@@ -112,6 +116,15 @@ function bl() {
       .then((data1) => {
         let data = data1.data;
         let rdc = data.reduce((pre, cur, i) => {
+          let ddt = cur.data;
+          if (cur.type == "file") {
+            fetch(ddt)
+              .then((rs) => rs.blob())
+              .then((b) => {
+                let ul = URL.createObjectURL(b);
+                ddt = ul;
+              });
+          }
           return (
             pre +
             `
@@ -137,15 +150,21 @@ function bl() {
           >
             <div class="accordion-body">
             <div class="d-flex justify-content-around">
-            <textarea id="id_${cur.id}" style="display:none;">${
-              cur.data
-            }</textarea>
-            <button class="btn btn-info" onclick="copy('#id_${
-              cur.id
-            }',this)">Copy</button>
-            <button class="btn btn-info" onclick="sendUi('#id_${cur.id}','${
-              cur.type
-            }','${cur.filename}',this)">Send To Editor</button>
+            <textarea id="id_${cur.id}" style="display:none;">${(() => {
+              if (cur.type == "file") {
+                return "";
+              } else {
+                return ddt;
+              }
+            })()}</textarea>
+            ${(() => {
+              if (cur.type == "file") {
+                return "";
+              } else {
+                return `<button class="btn btn-info" onclick="copy('#id_${cur.id}',this)">Copy</button>
+            <button class="btn btn-info" onclick="sendUi('#id_${cur.id}','${cur.type}','${cur.filename}',this)">Send To Editor</button>`;
+              }
+            })()}
               <button class="btn btn-danger" onclick="del(${cur.id},'.rem_${
               cur.id
             }',this)">Delete</button>
@@ -161,6 +180,8 @@ function bl() {
                     </code>
                     </pre>
                     `;
+               } else if (cur.type == "file") {
+                 return `<a href='${ddt}' class='btn btn-success' download='${cur.filename}'>Download</a>`;
                }
              })()}
             </div>

@@ -6,6 +6,7 @@
     <title>Sundeep Free Cloud</title>
     <!-- Font Awesome -->
     <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="./script.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/monokai-sublime.min.css"
@@ -39,7 +40,7 @@
     </style>
   </head>
   <body>
-    <a href="" id="hidden_link" style="display:none;">Download</a>
+    <a href="" id="download_link" style="display:none;">Download</a>
     <audio src="./message.mp3" id="tone" style="display:none;"></audio>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-md">
@@ -187,11 +188,12 @@
             </div>
           </div>
           <div class="d-flex justify-content-around">
-            <button class="file-send btn btn-primary btn-lg mt-2" id="filesend">
+            <button
+              class="file-send btn btn-primary btn-lg mt-2"
+              id="filesend"
+              onclick="showFile()"
+            >
               Send
-            </button>
-            <button class="file-save btn btn-primary btn-lg mt-2" id="filesave">
-              Save
             </button>
           </div>
         </div>
