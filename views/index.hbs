@@ -85,6 +85,17 @@
             aria-selected="false"
           >File</a>
         </li>
+        <li class="nav-item" role="presentation">
+          <a
+            class="nav-link"
+            id="ex2-tab-4"
+            data-mdb-toggle="tab"
+            href="#ex2-tabs-4"
+            role="tab"
+            aria-controls="ex2-tabs-4"
+            aria-selected="false"
+          >Screen</a>
+        </li>
       </ul>
       <!-- Tabs navs -->
 
@@ -197,6 +208,19 @@
             </button>
           </div>
         </div>
+        {{! for screen sharing }}
+        <div
+          class="tab-pane fade"
+          id="ex2-tabs-4"
+          role="tabpanel"
+          aria-labelledby="ex2-tab-3"
+        >
+          <video src="" id="stream" class="form-control"></video>
+          <button class="btn btn-primary mt-2" onclick="startSharing()">Start
+            Sharing</button>
+          <button class="btn btn-primary mt-2" onclick="stopSharing()">Stop
+            Sharing</button>
+        </div>
       </div>
       <hr />
       <div class="settings d-flex justify-content-evenly">
@@ -221,6 +245,13 @@
     <script>
       const socket= io()
     </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js"
+      integrity="sha512-0f7Ahsuvr+/P2btTY4mZIw9Vl23lS6LY/Y7amdkmUg2dqsUF+cTe4QjWvj/NIBHJoGksOiqndKQuI9yzn2hB0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="module" src="./peer.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/default.min.css"

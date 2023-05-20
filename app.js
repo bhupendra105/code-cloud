@@ -15,10 +15,20 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
+  socket.on("offer", (sec) => {
+    socket.broadcast.emit("accept", sec);
+  });
+  socket.on("createPeer", () => {
+    socket.broadcast.emit("peerAccept");
+  });
+  socket.on("signal1", (data) => {
+    socket.broadcast.emit("from1", data);
+  });
+  socket.on("signal2", (data) => {
+    socket.broadcast.emit("from2", data);
+  });
   socket.on("text", (json) => {
     axios.post(api, json).then((res) => {
-      // console.log(res);
       socket.broadcast.emit("new text", JSON.stringify(res.data));
     });
   });
