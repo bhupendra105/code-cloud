@@ -47,14 +47,14 @@ socket.on("new text", (text) => {
                return "";
              } else {
                return `
-                 <button class="btn btn-info" onclick="copy('#id_${txt.id}',this)">Copy</button>
-            <button class="btn btn-info" onclick="sendUi('#id_${txt.id}','${txt.type}','${txt.filename}',this)">Send To Editor</button>
+                 <button class="btn btn-info rounded-pill" onclick="copy('#id_${txt.id}',this)">Copy</button>
+            <button class="btn btn-info rounded-pill" onclick="sendUi('#id_${txt.id}','${txt.type}','${txt.filename}',this)">Send To Editor</button>
                 `;
              }
            })()}
-              <button class="btn btn-danger" onclick="del(${txt.id},'.rem_${
-        txt.id
-      }',this)">Delete</button>
+              <button class="btn btn-danger rounded-pill" onclick="del(${
+                txt.id
+              },'.rem_${txt.id}',this)">Delete</button>
             </div><hr>
              ${(() => {
                if (txt.type == "text") {
@@ -68,7 +68,7 @@ socket.on("new text", (text) => {
                     </pre>
                     `;
                } else if (txt.type == "file") {
-                 return `<a href='${txt.data}' class='btn btn-success' download='${txt.filename}'>Download</a>`;
+                 return `<a href='${txt.data}' class='btn btn-success rounded-pill' download='${txt.filename}'>Download</a>`;
                }
              })()}
             </div>

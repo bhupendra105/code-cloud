@@ -1,7 +1,22 @@
 let api =
   "https://script.google.com/macros/s/AKfycbweN5vvRJJfIjDy_5czNK7JVKNmQ07AuLbieH2p0ysg861QR_KQeNrJQMV3x3LXqJMm/exec";
 let txtarea = document.querySelector("#text");
-
+function chmode(elm) {
+  let atr = elm.getAttribute("data-theme");
+  let dark = "./mdb.dark.min.css";
+  let light =
+    "https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css";
+  let theme = document.querySelector("#theme");
+  if (atr == "light") {
+    theme.href = dark;
+    elm.setAttribute("data-theme", "dark");
+    elm.textContent = "Light Mode";
+  } else if (atr == "dark") {
+    theme.href = light;
+    elm.setAttribute("data-theme", "light");
+    elm.textContent = "Dark Mode";
+  }
+}
 function cleartext() {
   txtarea.value = "";
   $.notify("Text Box Cleared!", "info");
@@ -161,13 +176,13 @@ function bl() {
               if (cur.type == "file") {
                 return "";
               } else {
-                return `<button class="btn btn-info" onclick="copy('#id_${cur.id}',this)">Copy</button>
-            <button class="btn btn-info" onclick="sendUi('#id_${cur.id}','${cur.type}','${cur.filename}',this)">Send To Editor</button>`;
+                return `<button class="btn btn-info rounded-pill" onclick="copy('#id_${cur.id}',this)">Copy</button>
+            <button class="btn btn-info rounded-pill" onclick="sendUi('#id_${cur.id}','${cur.type}','${cur.filename}',this)">Send To Editor</button>`;
               }
             })()}
-              <button class="btn btn-danger" onclick="del(${cur.id},'.rem_${
-              cur.id
-            }',this)">Delete</button>
+              <button class="btn btn-danger rounded-pill" onclick="del(${
+                cur.id
+              },'.rem_${cur.id}',this)">Delete</button>
             </div><hr>
              ${(() => {
                if (cur.type == "text") {
@@ -181,7 +196,7 @@ function bl() {
                     </pre>
                     `;
                } else if (cur.type == "file") {
-                 return `<a href='${ddt}' class='btn btn-success' download='${cur.filename}'>Download</a>`;
+                 return `<a href='${ddt}' class='btn btn-success rounded-pill' download='${cur.filename}'>Download</a>`;
                }
              })()}
             </div>
